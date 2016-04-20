@@ -13,6 +13,7 @@ def processFile(dir,processFunction):
                 fileMap[file.replace(dir,'').replace('.txt','')] = result
     return fileMap
 
+#process input image with threshold in mind
 def processInput(f):
     pixels = []
     threshold = 100
@@ -36,19 +37,18 @@ def processOutput(f):
 def prepareTrainingData(input,output):
     train_x = []
     train_y = []
-    #set a threshold for value to remove the background
     for d in input.keys():
         img = numpy.array(input[d],numpy.uint8)
         out = list(output[d])
-        i=0
-        #cut the image into 5 pices !
-        startLocX = 7
-        endLocX = 21
-        startLocY = 6
-        increment = 8
+        i = 0
+        startX = 7
+        endX = 21
+
+        startY = 6
+        inc = 8
         for i in range(5):
-            char = img[startLocX:endLocX,startLocY:startLocY+increment]
-            startLocY = startLocY + increment + 1
+            char = img[startX:endX,startY:startY+inc]
+            startY = startY + inc + 1
 
             train_x.append(char.ravel())
             train_y.append(out[i])
